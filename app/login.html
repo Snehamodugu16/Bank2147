@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank2147 - Login</title>
+</head>
+<body>
+
+<h2>Login to Bank2147</h2>
+
+<input id="username" placeholder="Username" />
+<br><br>
+
+<input id="password" type="password" placeholder="Password" />
+<br><br>
+
+<button id="loginBtn">Login</button>
+
+<p id="errorMsg" style="color:red;"></p>
+
+<br>
+<a href="register.html">Don't have an account? Register</a>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("loginBtn").onclick = function() {
+
+        const user = document.getElementById("username").value;
+        const pass = document.getElementById("password").value;
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const foundUser = users.find(u => u.username === user && u.password === pass);
+
+        if(foundUser) {
+            localStorage.setItem("currentUser", JSON.stringify(foundUser));
+            window.location.href = "dashboard.html";
+        } else {
+            document.getElementById("errorMsg").innerText = "Invalid Credentials";
+        }
+    }
+
+});
+</script>
+
+</body>
+</html>

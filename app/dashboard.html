@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank2147 - Dashboard</title>
+</head>
+<body>
+
+<h2>Bank2147 Dashboard</h2>
+
+<h3 id="welcomeUser"></h3>
+
+<p>Account Balance: <span id="accountBalance"></span></p>
+
+<input id="transferAmount" placeholder="Enter amount to transfer" />
+<button id="transferBtn">Transfer</button>
+
+<p id="transferMsg" style="color:green;"></p>
+
+<br><br>
+<button id="logoutBtn">Logout</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if(!currentUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    document.getElementById("welcomeUser").innerText = "Welcome, " + currentUser.username;
+    document.getElementById("accountBalance").innerText = "$" + currentUser.balance;
+
+    document.getElementById("transferBtn").onclick = function() {
+
+        const amount = parseInt(document.getElementById("transferAmount").value);
+
+        if(amount > currentUser.balance || amount <= 0) {
+            alert("Invalid transfer amount");
+            return;
+        }
+
+        currentUser.balance -= amount;
+
+        let users = JSON.parse(localStorage.getItem("users"));
+
+        const userIndex = users.findIndex(u => u.username === currentUser.username);
+        users[userIndex] = currentUser;
+
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+        document.getElementById("accountBalance").innerText = "$" + currentUser.balance;
+        document.getElementById("transferMsg").innerText = "Transfer Successful!";
+    }
+
+    document.getElementById("logoutBtn").onclick = function() {
+        localStorage.removeItem("currentUser");
+        window.location.href = "login.html";
+    }
+
+});
+</script>
+
+</body>
+</html>

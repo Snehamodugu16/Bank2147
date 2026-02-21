@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank2147 - Register</title>
+</head>
+<body>
+
+<h2>Create Bank2147 Account</h2>
+
+<input id="newUsername" placeholder="Username" />
+<br><br>
+
+<input id="newPassword" type="password" placeholder="Password" />
+<br><br>
+
+<button id="registerBtn">Register</button>
+
+<p id="successMsg" style="color:green;"></p>
+<p id="errorMsg" style="color:red;"></p>
+
+<br>
+<a href="login.html">Already have an account? Login</a>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("registerBtn").onclick = function() {
+
+        const user = document.getElementById("newUsername").value;
+        const pass = document.getElementById("newPassword").value;
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const userExists = users.find(u => u.username === user);
+
+        if(userExists) {
+            document.getElementById("errorMsg").innerText = "User already exists";
+            return;
+        }
+
+        users.push({
+            username: user,
+            password: pass,
+            balance: 10000
+        });
+
+        localStorage.setItem("users", JSON.stringify(users));
+
+        document.getElementById("successMsg").innerText = "Account Created Successfully!";
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
+    }
+
+});
+</script>
+
+</body>
+</html>
