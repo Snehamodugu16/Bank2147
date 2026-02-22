@@ -1,67 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bank2147 - Dashboard</title>
+  <title>Bank2147 Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      width: 320px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+
+    .loader {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Bank2147 Dashboard</h2>
+<h2>Dashboard</h2>
 
-<h3 id="welcomeUser"></h3>
+<p class="loader" data-testid="loader">Loading account details...</p>
 
-<p>Account Balance: <span id="accountBalance"></span></p>
+<div class="card">
 
-<input id="transferAmount" placeholder="Enter amount to transfer" />
-<button id="transferBtn">Transfer</button>
+  <p><strong>Welcome:</strong>
+    <span data-testid="welcome"></span>
+  </p>
 
-<p id="transferMsg" style="color:green;"></p>
+  <p><strong>Account Number:</strong>
+    <span data-testid="account"></span>
+  </p>
+
+  <p><strong>Available Balance:</strong>
+    ₹ <span data-testid="balance"></span>
+  </p>
+
+</div>
+
+<!-- 🔗 Navigation Buttons -->
+
+<a href="transfer.html">
+  <button data-testid="go-transfer">Transfer Money</button>
+</a>
+
+<a href="transaction.html">
+  <button data-testid="go-transactions">View Transactions</button>
+</a>
 
 <br><br>
-<button id="logoutBtn">Logout</button>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
+<button onclick="logout()" data-testid="logout-btn">Logout</button>
 
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-    if(!currentUser) {
-        window.location.href = "login.html";
-        return;
-    }
-
-    document.getElementById("welcomeUser").innerText = "Welcome, " + currentUser.username;
-    document.getElementById("accountBalance").innerText = "$" + currentUser.balance;
-
-    document.getElementById("transferBtn").onclick = function() {
-
-        const amount = parseInt(document.getElementById("transferAmount").value);
-
-        if(amount > currentUser.balance || amount <= 0) {
-            alert("Invalid transfer amount");
-            return;
-        }
-
-        currentUser.balance -= amount;
-
-        let users = JSON.parse(localStorage.getItem("users"));
-
-        const userIndex = users.findIndex(u => u.username === currentUser.username);
-        users[userIndex] = currentUser;
-
-        localStorage.setItem("users", JSON.stringify(users));
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-        document.getElementById("accountBalance").innerText = "$" + currentUser.balance;
-        document.getElementById("transferMsg").innerText = "Transfer Successful!";
-    }
-
-    document.getElementById("logoutBtn").onclick = function() {
-        localStorage.removeItem("currentUser");
-        window.location.href = "login.html";
-    }
-
-});
-</script>
+<!-- ✅ JS Module -->
+<script type="module" src="./js/dashboard.js"></script>
 
 </body>
 </html>

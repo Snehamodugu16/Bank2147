@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transaction History</title>
+  <style>
+    .hidden { display: none; }
+    table { border-collapse: collapse; width: 80%; }
+    th, td { padding: 8px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<h2>Transaction History</h2>
+
+<label>Filter by Type:</label>
+<select data-testid="filter-type" id="filterType">
+  <option value="ALL">All</option>
+  <option value="DEBIT">Debit</option>
+</select>
+
+<button onclick="loadTransactions()" data-testid="apply-filter">
+  Apply
+</button>
+
+<br><br>
+
+<p data-testid="loader">Loading transactions...</p>
+
+<table border="1" data-testid="txn-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Beneficiary</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<p data-testid="empty-state"></p>
+
+<br>
+
+<a href="dashboard.html">
+  <button data-testid="back-dashboard">Back to Dashboard</button>
+</a>
+
+<script type="module" src="./js/transaction.js"></script>
+
+</body>
+</html>
