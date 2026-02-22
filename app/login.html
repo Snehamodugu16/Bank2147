@@ -1,47 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bank2147 - Login</title>
+  <title>Bank2147 Login</title>
+
+  <style>
+    .hidden { display: none; }
+    .error { color: red; }
+  </style>
 </head>
 <body>
 
-<h2>Login to Bank2147</h2>
+<h2>Login</h2>
 
-<input id="username" placeholder="Username" />
+<input
+  id="username"
+  data-testid="username"
+  placeholder="Username"
+/>
 <br><br>
 
-<input id="password" type="password" placeholder="Password" />
+<input
+  id="password"
+  type="password"
+  data-testid="password"
+  placeholder="Password"
+/>
+
+<button onclick="togglePassword()" data-testid="toggle-password">
+  👁
+</button>
+
 <br><br>
 
-<button id="loginBtn">Login</button>
+<label>
+  <input type="checkbox" id="rememberMe" data-testid="remember-me" />
+  Remember Me
+</label>
 
-<p id="errorMsg" style="color:red;"></p>
+<br><br>
 
-<br>
-<a href="register.html">Don't have an account? Register</a>
+<button onclick="login()" data-testid="login-btn">
+  Login
+</button>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
+<p data-testid="loader" class="hidden">Logging in...</p>
 
-    document.getElementById("loginBtn").onclick = function() {
+<p data-testid="error-msg" class="error"></p>
 
-        const user = document.getElementById("username").value;
-        const pass = document.getElementById("password").value;
-
-        let users = JSON.parse(localStorage.getItem("users")) || [];
-
-        const foundUser = users.find(u => u.username === user && u.password === pass);
-
-        if(foundUser) {
-            localStorage.setItem("currentUser", JSON.stringify(foundUser));
-            window.location.href = "dashboard.html";
-        } else {
-            document.getElementById("errorMsg").innerText = "Invalid Credentials";
-        }
-    }
-
-});
-</script>
+<!-- ✅ LOAD MODULE -->
+<script type="module" src="./js/login.js"></script>
 
 </body>
 </html>
